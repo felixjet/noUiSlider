@@ -489,7 +489,9 @@
 				,handles = handle.data('nui').base.data('handles')
 				// Get some settings from the handle;
 				,style = handle.data('nui').style
-				,hLimit;
+				,hLimit
+				,baseSize = style === 'left' ? handle.data('nui').base.width() : handle.data('nui').base.height()
+				,handleWidth = handle.data('nui').handleWidth;
 
 			// Make sure the value can be parsed.
 			// This will catch any potential NaN, even though
@@ -548,8 +550,20 @@
 				handle.removeClass(clsList[13]);
 			}
 
+			// Calculate the position of the handler correctly, but leaves
+			// the value intact, for serialization to work correctly.
+			var cssTo = Math.round( ( ( baseSize / 100) * to ) - ( handleWidth / 2 ) );
+
+			if( cssTo < 0 ) {
+				cssTo = 0;
+			} else if( cssTo > ( baseSize - handleWidth ) ) {
+				cssTo = baseSize - handleWidth;
+			}
+
+			cssTo = ( ( cssTo * 100 ) / baseSize);
+
 			// Set handle to new location
-			handle.css( style , to + '%' );
+			handle.css( style , cssTo + '%' );
 
 			// Write the value to the serialization object.
 			handle.data('store').val(
@@ -924,6 +938,7 @@
 						,options: options
 						,base: base
 						,style: style
+						,handleWidth: parseInt(handle.css('width'))
 						,number: i
 					}).data('store', store (
 						 handle
@@ -954,7 +969,7 @@
 					handles: handles
 				});
 
-				// Attach the the tap event to the slider base.
+				// Attach the tap event to the slider base.
 				attach ( actions.end, base, tap, {
 					 base: base
 					,target: target
