@@ -491,7 +491,7 @@
 				,style = handle.data('nui').style
 				,hLimit
 				,baseSize = style === 'left' ? handle.data('nui').base.width() : handle.data('nui').base.height()
-				,handleWidth = handle.data('nui').handleWidth;
+				,handleSize = style === 'left' ? handle.data('nui').handleWidth : handle.data('nui').handleHeight;
 
 			// Make sure the value can be parsed.
 			// This will catch any potential NaN, even though
@@ -552,12 +552,12 @@
 
 			// Calculate the position of the handler correctly, but leaves
 			// the value intact, for serialization to work correctly.
-			var cssTo = Math.round( ( ( baseSize / 100 ) * to ) - ( handleWidth / 2 ) );
+			var cssTo = Math.round( ( ( baseSize / 100 ) * to ) - ( handleSize / 2 ) );
 
 			if( cssTo < 0 ) {
 				cssTo = 0;
-			} else if( cssTo > ( baseSize - handleWidth ) ) {
-				cssTo = baseSize - handleWidth;
+			} else if( cssTo > ( baseSize - handleSize ) ) {
+				cssTo = baseSize - handleSize;
 			}
 
 			cssTo = ( ( cssTo * 100 ) / baseSize );
@@ -939,6 +939,7 @@
 						,base: base
 						,style: style
 						,handleWidth: parseInt(handle.css('width'))
+						,handleHeight: parseInt(handle.css('height'))
 						,number: i
 					}).data('store', store (
 						 handle
