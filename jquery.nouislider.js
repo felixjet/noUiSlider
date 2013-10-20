@@ -552,7 +552,7 @@
 
 			// Calculate the position of the handler correctly, but leaves
 			// the value intact, for serialization to work correctly.
-			var cssTo = Math.round( ( ( baseSize / 100) * to ) - ( handleWidth / 2 ) );
+			var cssTo = Math.round( ( ( baseSize / 100 ) * to ) - ( handleWidth / 2 ) );
 
 			if( cssTo < 0 ) {
 				cssTo = 0;
@@ -560,7 +560,7 @@
 				cssTo = baseSize - handleWidth;
 			}
 
-			cssTo = ( ( cssTo * 100 ) / baseSize);
+			cssTo = ( ( cssTo * 100 ) / baseSize );
 
 			// Set handle to new location
 			handle.css( style , cssTo + '%' );
